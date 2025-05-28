@@ -27,12 +27,12 @@ pipeline {
   steps {
     withCredentials([string(credentialsId: 'sonar-token', variable: 'SONAR_TOKEN')]) {
       bat '''
-        npx sonar-scanner \
-          -Dsonar.organization=brendanh1 \
-          -Dsonar.projectKey=brendanh1_blog-api \
-          -Dsonar.sources=src \
-          -Dsonar.tests=tests \
-          -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info \
+        npx sonar-scanner ^
+          -Dsonar.organization=brendanh1 ^
+          -Dsonar.projectKey=brendanh1_blog-api ^
+          -Dsonar.sources=src ^
+          -Dsonar.tests=tests ^
+          -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info ^
           -Dsonar.login=$SONAR_TOKEN
       '''
     }
