@@ -10,7 +10,7 @@ pipeline {
     stage('Build') {
       steps {
         echo 'Building Docker image...'
-        bat "docker build -t %IMAGE_NAME%:%IMAGE_TAG%} ." 
+        bat 'docker build -t %IMAGE_NAME%:%IMAGE_TAG% .' 
       }
     }
 
@@ -80,6 +80,20 @@ stage('Release') {
     }
 
     echo 'Release complete and pushed to Docker Hub.'
+  }
+}
+
+stage('Monitoring') {
+  steps {
+    echo 'Sending deployment event to Datadog...'
+    withCredentials([string(credentialsId: 'datadog-api-key', variable: 'DD_API_KEY')]) {
+      bat '''
+        curl -X POST "https://api.datadoghq.com/api/v1/events" ^
+        -H "Content-Type: application/json" ^
+        -H "DD-API-KEY: %DD_API_KEY%" ^
+        -d "{\\"title\\": \\"Deployment\\", \\"text\\": \\"New release of %IMAGE_NAME%:%IMAGE_TAG% deployed\\", \\"alert_type\\": \\"info\\"}"
+      '''
+    }
   }
 }
 
