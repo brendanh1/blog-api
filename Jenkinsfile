@@ -67,9 +67,9 @@ stage('Deploy') {
 
 stage('Release') {
   steps {
-    echo '📦 Releasing Docker image to Docker Hub...'
+    echo 'Releasing Docker image to Docker Hub...'
 
-    withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+    withCredentials([usernamePassword(credentialsId: 'docker-hub-creds', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
       bat """
         docker login -u %DOCKER_USER% -p %DOCKER_PASS%
         docker tag blog-api:%IMAGE_TAG% %DOCKER_USER%/blog-api:%IMAGE_TAG%
