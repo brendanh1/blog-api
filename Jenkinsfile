@@ -8,11 +8,16 @@ pipeline {
 
   stages {
     stage('Build') {
-      steps {
-        echo 'Building Docker image...'
-        bat 'docker build -t %IMAGE_NAME%:%IMAGE_TAG% .' 
-      }
+  steps {
+    echo 'Logging in to Docker Hub...'
+    withCredentials([usernamePassword(credentialsId: 'docker-hub-creds', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+      bat """
+        docker login -u %DOCKER_USER% -p %DOCKER_PASS%
+        docker build -t %IMAGE_NAME%:%IMAGE_TAG% .
+      """
     }
+  }
+}
 
     stage('Test') {
   steps {
