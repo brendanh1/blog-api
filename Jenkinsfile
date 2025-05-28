@@ -67,21 +67,18 @@ stage('Deploy') {
 
 stage('Release') {
   steps {
-    echo 'Promoting Docker image to production...'
+    echo '📦 Releasing Docker image to Docker Hub...'
 
-    // Tag the image as 'latest'
-    bat 'docker tag %IMAGE_NAME%:%IMAGE_TAG% brendan170/%IMAGE_NAME%:%IMAGE_TAG%'
-    bat 'docker tag %IMAGE_NAME%:%IMAGE_TAG% brendan170/%IMAGE_NAME%:latest'
-
-  withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
-    bat 'docker login -u %DOCKER_USER% -p %DOCKER_PASS%'
-    bat 'docker push brendan170/%IMAGE_NAME%:%IMAGE_TAG%'
-    bat 'docker push brendan170/%IMAGE_NAME%:latest'
+    withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+      bat """
+        docker login -u %DOCKER_USER% -p %DOCKER_PASS%
+        docker tag blog-api:%IMAGE_TAG% %DOCKER_USER%/blog-api:%IMAGE_TAG%
+        docker push %DOCKER_USER%/blog-api:%IMAGE_TAG%
+      """ 
     }
-
-    echo 'Release complete and pushed to Docker Hub.'
   }
 }
+
 
 stage('Monitoring') {
   steps {
