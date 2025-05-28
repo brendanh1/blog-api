@@ -57,7 +57,7 @@ stage('Security') {
 
   post {
     success {
-      echo "Build completed: _NAME:$IMAGE_TAG"
+      echo "Build completed: $IMAGE_NAME:$IMAGE_TAG"
     }
     failure {
       echo 'Build failed.'
