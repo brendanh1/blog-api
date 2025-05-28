@@ -57,11 +57,11 @@ stage('Security') {
 stage('Deploy') {
   steps {
     echo 'Deploying Docker container...'
-    sh '''
+    bat """
       docker stop blog-api || true
       docker rm blog-api || true
       docker run -d -p 3000:3000 --name blog-api %IMAGE_NAME%:%IMAGE_TAG%
-    '''
+    """
   }
 }
 
