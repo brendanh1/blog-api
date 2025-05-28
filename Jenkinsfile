@@ -73,10 +73,10 @@ stage('Release') {
     bat 'docker tag %IMAGE_NAME%:%IMAGE_TAG% brendan170/%IMAGE_NAME%:%IMAGE_TAG%'
     bat 'docker tag %IMAGE_NAME%:%IMAGE_TAG% brendan170/%IMAGE_NAME%:latest'
 
-    withCredentials([usernamePassword(credentialsId: 'docker-hub-creds', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
-      bat 'docker login -u %DOCKER_USER% -p %DOCKER_PASS%'
-      bat 'docker push brendan170/%IMAGE_NAME%:%IMAGE_TAG%'
-      bat 'docker push brendan170/%IMAGE_NAME%:latest'
+  withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+    bat 'docker login -u %DOCKER_USER% -p %DOCKER_PASS%'
+    bat 'docker push brendan170/%IMAGE_NAME%:%IMAGE_TAG%'
+    bat 'docker push brendan170/%IMAGE_NAME%:latest'
     }
 
     echo 'Release complete and pushed to Docker Hub.'
