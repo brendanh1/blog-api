@@ -34,7 +34,7 @@ pipeline {
           -Dsonar.sources=src ^
           -Dsonar.tests=tests ^
           -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info ^
-          -Dsonar.login= %sonar_token%
+          -Dsonar.login= %SONAR_TOKEN%
       """
     }
   }
@@ -45,11 +45,11 @@ stage('Security') {
     echo 'Running Snyk vulnerability scan...'
 
     withCredentials([string(credentialsId: 'snyk-token', variable: 'SNYK_TOKEN')]) {
-      bat '''
+      bat """
         npm install -g snyk
-        snyk auth $SNYK_TOKEN
+        snyk auth %SNYK_TOKEN%
         snyk test || true
-      '''
+      """
     }
   }
 }
