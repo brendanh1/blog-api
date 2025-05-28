@@ -28,8 +28,8 @@ pipeline {
     withCredentials([string(credentialsId: 'sonar-token', variable: 'SONAR_TOKEN')]) {
       bat '''
         npx sonar-scanner \
-          -Dsonar.organization=your-org-name \
-          -Dsonar.projectKey=your-org-name_blog-api \
+          -Dsonar.organization=brendanh1 \
+          -Dsonar.projectKey=brendanh1_blog-api \
           -Dsonar.sources=src \
           -Dsonar.tests=tests \
           -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info \
