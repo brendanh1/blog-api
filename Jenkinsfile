@@ -10,15 +10,15 @@ pipeline {
     stage('Build') {
       steps {
         echo 'Building Docker image...'
-        sh "docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ." 
+        bat "docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ." 
       }
     }
 
     stage('Test') {
   steps {
     echo 'Running tests...'
-    sh 'npm install'
-    sh 'npm test'
+    bat 'npm install'
+    bat 'npm test'
   }
 
 }
@@ -26,7 +26,7 @@ pipeline {
  stage('Code Quality') {
   steps {
     withCredentials([string(credentialsId: 'sonar-token', variable: 'SONAR_TOKEN')]) {
-      sh '''
+      bat '''
         npx sonar-scanner \
           -Dsonar.organization=your-org-name \
           -Dsonar.projectKey=your-org-name_blog-api \
@@ -44,7 +44,7 @@ stage('Security') {
     echo 'Running Snyk vulnerability scan...'
 
     withCredentials([string(credentialsId: 'snyk-token', variable: 'SNYK_TOKEN')]) {
-      sh '''
+      bat '''
         npm install -g snyk
         snyk auth $SNYK_TOKEN
         snyk test || true
