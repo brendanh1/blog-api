@@ -104,7 +104,7 @@ stage('Monitoring') {
 
   post {
     success {
-      echo "Build completed: %IMAGE_NAME%:%IMAGE_TAG%"
+      echo "Build completed: ${env.IMAGE_NAME}:${env.IMAGE_TAG}"
     }
     failure {
       echo 'Build failed.'
