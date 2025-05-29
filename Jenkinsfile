@@ -20,15 +20,14 @@ pipeline {
     }
 
     stage('Test') {
-      steps {
-        echo 'Running unit and integration tests...'
-        bat '''
-          npm install
-          npm run test:unit
-          npm run test:integration
-        '''
-      }
-    }
+  steps {
+    echo 'Running unit tests...'
+    bat 'npm run test:unit'
+
+    echo 'Running integration tests...'
+    bat 'npm run test:integration'
+  }
+}
 
     stage('Code Quality') {
       steps {
