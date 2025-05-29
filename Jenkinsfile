@@ -21,10 +21,12 @@ pipeline {
 
     stage('Test') {
   steps {
-    echo 'Running tests...'
-    bat 'npm install'
-    bat 'npm test'
-  }
+    echo 'Running unit and integration tests...'
+    bat '''
+      npm install
+      npm run test:unit
+      npm run test:integration
+    '''
 
 }
 
@@ -108,6 +110,6 @@ stage('Monitoring') {
     }
     failure {
       echo 'Build failed.'
-    }
+    }    
   }
 }
