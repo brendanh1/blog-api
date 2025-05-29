@@ -104,7 +104,7 @@ pipeline {
       echo "Build completed: ${IMAGE_NAME}:${IMAGE_TAG}"
     }
     failure {
-      echo 'Build failed.'
+      echo "Build failed: ${IMAGE_NAME}:${IMAGE_TAG} ."
     }
   }
 }
