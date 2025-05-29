@@ -7,7 +7,7 @@
     "test": "tests"
   },
   "scripts": {
-  "start": "node src/utils/server.js",
+  "start": "node src/server.js",
   "test": "npm run test:unit && npm run test:integration",
   "test:unit": "jest tests/unit",
   "test:integration": "jest tests/integration"
